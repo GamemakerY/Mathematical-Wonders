@@ -1,63 +1,132 @@
-<!doctypehtml>
-    <html lang=en-us>
+<!doctype html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <title>The Chaos Game | Algorithmic Wonders</title>
+    <style>
+        /* Modern Dark Theme */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-    <head>
-        <meta charset=utf-8>
-        <meta content="text/html; charset=utf-8" http-equiv=Content-Type>
-        <title>Emscripten-Generated Code</title>
-        <style>
+        .header {
+            padding: 20px;
+            text-align: center;
+        }
 
-            @-webkit-keyframes rotation {
-                from {
-                    -webkit-transform: rotate(0)
-                }
+        /* Container for the game canvas */
+        .game-wrapper {
+            position: relative;
+            border: 4px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
 
-                to {
-                    -webkit-transform: rotate(360deg)
+        canvas {
+            display: block;
+            max-width: 100%;
+            outline: none;
+        }
+
+        /* Styling for your rules section */
+        .info-section {
+            max-width: 800px;
+            margin: 30px 20px;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            border-left: 5px solid #bdd72e; /* Raylib-ish Green accent */
+        }
+
+        .info-section h2 {
+            margin-top: 0;
+            color: #bdd72e;
+        }
+
+        .rules-list {
+            line-height: 1.6;
+        }
+
+        /* Loading Status Styles */
+        #status {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            color: #bdd72e;
+        }
+        
+        .back-link {
+            margin-top: 20px;
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .back-link:hover { color: #fff; }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>The Chaos Game</h1>
+    </div>
+
+    <div class="game-wrapper">
+        <div id="status">Downloading...</div>
+        
+        <canvas id="canvas" oncontextmenu="event.preventDefault()" tabindex="-1"></canvas>
+    </div>
+
+    <div class="info-section">
+        <h2>The Chaos Game!</h2>
+        <div class="rules-list">
+            <p>Here are the rules for this:</p>
+            <ol>
+                <li>Step 1: 3 random points are randomly picked anywhere on the screen.</li>
+                <li>Step 2: A random point is picked completely randomly on the screen.</li>
+                <li>Step 3: The random point then randomly chooses any of the 3 points and then a new point is added halfway through it.</li>
+            </ol>
+        </div>
+    </div>
+
+    <a href="../index.html" class="back-link">← Back to Library</a>
+
+    <script type='text/javascript'>
+        var statusElement = document.getElementById('status');
+        var canvasElement = document.getElementById('canvas');
+
+        var Module = {
+            canvas: canvasElement,
+            locateFile: function(path) {
+                return path;
+            },
+            setStatus: function(text) {
+                if (!text) {
+                    statusElement.style.display = 'none';
+                } else {
+                    statusElement.innerHTML = text;
                 }
             }
+        };
 
-            @-moz-keyframes rotation {
-                from {
-                    -moz-transform: rotate(0)
-                }
-
-                to {
-                    -moz-transform: rotate(360deg)
-                }
-            }
-
-            @-o-keyframes rotation {
-                from {
-                    -o-transform: rotate(0)
-                }
-
-                to {
-                    -o-transform: rotate(360deg)
-                }
-            }
-
-            @keyframes rotation {
-                from {
-                    transform: rotate(0)
-                }
-
-                to {
-                    transform: rotate(360deg)
-                }
-            }
-
-        </style>
-    </head>
-
-    <body>
-        <div class=spinner id=spinner></div>
-        <div class=emscripten id=status>Downloading...</div>
-        <div class=emscripten><progress hidden id=progress max=100 value=0></progress></div>
-        <div class=emscripten_border><canvas class=emscripten id=canvas oncontextmenu=event.preventDefault()
-                tabindex=-1></canvas></div>
-        <script>var statusElement = document.getElementById("status"), progressElement = document.getElementById("progress"), spinnerElement = document.getElementById("spinner"), canvasElement = document.getElementById("canvas"), outputElement = document.getElementById("output"); outputElement && (outputElement.value = ""), canvasElement.addEventListener("webglcontextlost", (e => { alert("WebGL context lost. You will need to reload the page."), e.preventDefault() }), !1); var Module = { print(...e) { if (console.log(...e), outputElement) { var t = e.join(" "); outputElement.value += t + "\n", outputElement.scrollTop = outputElement.scrollHeight } }, canvas: canvasElement, setStatus(e) { if (Module.setStatus.last || (Module.setStatus.last = { time: Date.now(), text: "" }), e !== Module.setStatus.last.text) { var t = e.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/), n = Date.now(); t && n - Module.setStatus.last.time < 30 || (Module.setStatus.last.time = n, Module.setStatus.last.text = e, t ? (e = t[1], progressElement.value = 100 * parseInt(t[2]), progressElement.max = 100 * parseInt(t[4]), progressElement.hidden = !1, spinnerElement.hidden = !1) : (progressElement.value = null, progressElement.max = null, progressElement.hidden = !0, e || (spinnerElement.style.display = "none")), statusElement.innerHTML = e) } }, totalDependencies: 0, monitorRunDependencies(e) { this.totalDependencies = Math.max(this.totalDependencies, e), Module.setStatus(e ? "Preparing... (" + (this.totalDependencies - e) + "/" + this.totalDependencies + ")" : "All downloads complete.") } }; Module.setStatus("Downloading..."), window.onerror = e => { Module.setStatus("Exception thrown, see JavaScript console"), spinnerElement.style.display = "none", Module.setStatus = e => { e && console.error("[post-exception status] " + e) } }</script>
-        <script async src=index.js></script>
-    </body>
-
-    </html>
+        canvasElement.addEventListener("webglcontextlost", function(e) { 
+            alert('WebGL context lost. Please reload.'); 
+            e.preventDefault(); 
+        }, false);
+    </script>
+    
+    <script async src="index.js"></script>
+</body>
+</html>
