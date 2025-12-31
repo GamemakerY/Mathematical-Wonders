@@ -2,32 +2,32 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "type": "cppbuild",
-            "label": "Build Raylib Game",
+            "label": "Build and Run Raylib",
+            "type": "shell",
             "command": "cl.exe",
             "args": [
                 "/Zi",
                 "/EHsc",
                 "/MD",
-                "/I", "${workspaceFolder}/include",
-                "${workspaceFolder}/main.cpp",
-                "/Fe:", "${workspaceFolder}/main.exe",
+                "/I", "\"${workspaceFolder}\\raylib_desktop\\include\"",
+                "\"${workspaceFolder}\\src\\*.cpp\"",
+                "/Fe:\"${workspaceFolder}\\bin\\main.exe\"",
                 "/link",
-                "/LIBPATH:${workspaceFolder}/lib",
+                "/LIBPATH:\"${workspaceFolder}\\raylib_desktop\\lib\"",
                 "raylib.lib",
-                "user32.lib",
-                "gdi32.lib",
-                "winmm.lib",
-                "shell32.lib"
+                "opengl32.lib",
+                "User32.lib",
+                "Gdi32.lib",
+                "Shell32.lib",
+                "Winmm.lib",
+                "&&",
+                "\"${workspaceFolder}\\bin\\main.exe\""
             ],
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "problemMatcher": ["$msCompile"],
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
+            },
+            "problemMatcher": "$msCompile"
         }
     ]
 }
