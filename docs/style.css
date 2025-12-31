@@ -1,0 +1,57 @@
+/* General Reset */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    background-color: #f4f4f9;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    height: 100vh;
+    width: 250px;
+    background-color: #2c3e50;
+    color: white;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.3s; /* Smooth sliding if you decide to hide it later */
+}
+
+.sidebar h2 {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #ecf0f1;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+/* Button Styling */
+.project-btn {
+    text-decoration: none;
+    color: white;
+    background-color: #34495e;
+    width: 80%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+/* Button Hover Effects */
+.project-btn:hover {
+    background-color: #3498db;
+    transform: translateX(10px); /* Moves button slightly right */
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+    border: 1px solid #ffffff;
+}
+
+/* Main Content Area */
+.main-content {
+    flex-grow: 1;
+    padding: 40px;
+    text-align: center;
+}
